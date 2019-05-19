@@ -17,11 +17,24 @@ public class MyFrame extends JFrame {
      */
 
     public MyFrame() {
+        basicSetup();
+
+
+        Wolf wolf = new Wolf(this);
+
+        Thread threadBoard = new Thread(board);
+        Thread threadWolf = new Thread(wolf);
+        threadWolf.start();
+        threadBoard.start();
+    }
+
+    void basicSetup() {
         var content = getContentPane();
         //content.setLayout(new GridLayout());
 
         board = new MyBoard(this);
         content.add(board);
+
 
         setSize(1080,720);
         setResizable(true);
@@ -29,6 +42,10 @@ public class MyFrame extends JFrame {
         setLocationRelativeTo(null); // wysrodkowuje okno na ekranie
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+    }
+
+    MyBoard getMyBoard() {
+        return board;
     }
 
 }

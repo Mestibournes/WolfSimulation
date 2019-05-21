@@ -9,7 +9,8 @@ import java.awt.*;
 
 public class MyFrame extends JFrame {
 
-    private MyBoard board;
+    public MyBoard board;
+    public Position position;
     public Randomize randomize;
 
     /**
@@ -18,21 +19,25 @@ public class MyFrame extends JFrame {
 
     public MyFrame() {
         basicSetup();
-
+        position.generateWolf();
+        position.generateSheeps();
+        board.refreshBoard();
 
         Wolf wolf = new Wolf(this);
+        Thread thread = new Thread(wolf);
+        thread.start();
 
-        Thread threadBoard = new Thread(board);
-        Thread threadWolf = new Thread(wolf);
-        threadWolf.start();
-        threadBoard.start();
-    }
+
+
+
+      }
 
     void basicSetup() {
         var content = getContentPane();
         //content.setLayout(new GridLayout());
 
         board = new MyBoard(this);
+        position = new Position(this, true);
         content.add(board);
 
 

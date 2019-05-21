@@ -6,8 +6,8 @@ public class Randomize {
 
     //public void Randomize
 
-    public int picker(){
-        return rand.nextInt(10);
+    public int picker(int number){
+        return rand.nextInt(number);
     }
 
 

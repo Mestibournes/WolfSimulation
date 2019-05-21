@@ -9,16 +9,22 @@ public class Wolf implements Runnable{
 
     @Override
     public synchronized void run() {
-        try {
-            Thread.sleep(1000);
-            frame.getMyBoard().wolfPosition.x ++;
-            System.out.println("PORUSZONO W PRAWO");
-            Thread.sleep(100);
-            frame.getMyBoard().wolfPosition.y ++;
-            System.out.println("PORUSZONO W GORE");
-            notifyAll();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+        synchronized(frame.position) {
+            try {
+                Thread.sleep(1000);
+                frame.position.wolfPosition.x++;
+                System.out.println("PORUSZONO W PRAWO");
+                Thread.sleep(100);
+                frame.position.wolfPosition.y++;
+                System.out.println("PORUSZONO W DOL");
+
+                frame.board.clearBackground();
+                frame.board.refreshBoard();
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 

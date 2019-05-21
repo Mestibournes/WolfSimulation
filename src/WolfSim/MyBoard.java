@@ -11,13 +11,12 @@ import static java.awt.Color.*;
  * Klasa odpowiedzialna za glowny panel programu, w ktorym beda wyswietlane mniejsze - "owce" i "wilki"
  */
 
-public class MyBoard extends JPanel implements Runnable {
+public class MyBoard extends JPanel {
     int sheepsNumber = 3;       // LICZBA OWIEC
     int n = 10, m = 10;           // WYMIARY PLANSZY
 
     JPanel[][] panelArray = new JPanel[n][m];
-    Position[] sheepsPosition = new Position[sheepsNumber];
-    Position wolfPosition = new Position();
+
 
     private MyFrame frame;
 
@@ -34,31 +33,10 @@ public class MyBoard extends JPanel implements Runnable {
 
 
         generateBackground();
-        generateWolf();
-        generateSheeps();
-        refreshBoard();
 
 
 
-    }
 
-    @Override
-    public synchronized void run() {
-        try {
-
-            System.out.println("Przed waitem");
-            //this.wait();
-            System.out.println("Po waicie");
-            Thread.sleep(3000);
-            System.out.println("POZYCJA WILKA: " + wolfPosition.x + " " + wolfPosition.y);
-            clearBackground();
-            System.out.println("WYCZYSZCZONO TLO");
-            //System.out.println("POZYCJA WILKA: " + wolfPosition.x + " " + wolfPosition.y);
-            refreshBoard();
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -85,63 +63,29 @@ public class MyBoard extends JPanel implements Runnable {
     }
 
 
-    void generateWolf() {
-        wolfPosition.set(((int)(Math.random() * n)),((int) (Math.random() * m)));
 
-    }
 
-    void generateSheeps() {
-        int x, y;
-        boolean validPosition;
-
-        for (int i = 0; i < sheepsNumber; i++) {
-            sheepsPosition[i] = new Position();
-            do {
-                validPosition = true;
-                x = (int)(Math.random() * n);
-                y = (int)(Math.random() * m);
-
-                if ( x == wolfPosition.getX() && y == wolfPosition.getY()) {
-                    //System.out.println ("OWCA ZRESPILA SIE NA WILKU");
-                    validPosition = false;
-                }
-
-                for (int j = 0; j < i; j++) {
-                   // if ( (sheepsPosition[j].getX() == x) && (sheepsPosition[j].getY() == y) ) { validPosition = false; }
-                    if ( (sheepsPosition[j].getX() ==  x) && (sheepsPosition[j].getY() == y) ) {
-                        //System.out.println ("OWCA ZRESPILA SIE NA OWCY");
-                        validPosition = false; }
-                }
-
-            } while (validPosition == false);
-
-            sheepsPosition[i].set(x, y);
-
-            }
-
-        for (int i = 0; i < sheepsNumber; i++) {
-            if ((sheepsPosition[i].getX() == wolfPosition.getX()) && (sheepsPosition[i].getY() == wolfPosition.getY()))
-            {
-                System.out.println("OWCA ZRESPILA SIE NA WILKU");
-            }
-            for (int j = 0; j < i; j++) {
-                if ((sheepsPosition[j].getX() == sheepsPosition[i].getX()) && (sheepsPosition[j].getY() == sheepsPosition[i].getY()))
-                {
-                    System.out.println("OWCA ZRESPILA SIE NA WILKU");
-                }
-            }
-            panelArray[sheepsPosition[i].getX()][sheepsPosition[i].getY()].setBackground(PINK);
-        }
-
-    }
 
     /** Dodawanie wszystkich pol do panelu*/
     void refreshBoard() {
-        panelArray[wolfPosition.getX()][wolfPosition.getY()].setBackground(RED);
+        System.out.println("ODSWIEZONO");
+        drawWolf();
+        drawSheeps();
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 add(panelArray[i][j]);
             }
+        }
+    }
+
+    void drawWolf() {
+        panelArray[frame.position.wolfPosition.x][frame.position.wolfPosition.y].setBackground(RED);
+    }
+
+    void drawSheeps() {
+        for (int i = 0; i < sheepsNumber; i++) {
+            panelArray[frame.position.sheepsPosition[i].x][frame.position.sheepsPosition[i].y].setBackground(PINK);
         }
     }
 

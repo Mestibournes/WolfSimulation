@@ -24,8 +24,12 @@ public class MyFrame extends JFrame {
         board.refreshBoard();
 
         Wolf wolf = new Wolf(this);
-        Thread thread = new Thread(wolf);
-        thread.start();
+        Thread wolfThread = new Thread(wolf);
+        wolfThread.start();
+
+        Sheeps sheeps = new Sheeps(this);
+        Thread sheepsThread = new Thread(sheeps);
+        sheepsThread.start();
 
 
 
@@ -41,7 +45,7 @@ public class MyFrame extends JFrame {
         content.add(board);
 
 
-        setSize(1080,720);
+        setSize(800,800);
         setResizable(true);
         //pack();
         setLocationRelativeTo(null); // wysrodkowuje okno na ekranie

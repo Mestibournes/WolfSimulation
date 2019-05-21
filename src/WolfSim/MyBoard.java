@@ -1,21 +1,25 @@
 package WolfSim;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 import static java.awt.Color.*;
 
+
+
 /**
  * Klasa odpowiedzialna za glowny panel programu, w ktorym beda wyswietlane mniejsze - "owce" i "wilki"
  */
 
 public class MyBoard extends JPanel {
-    int sheepsNumber = 3;       // LICZBA OWIEC
-    int n = 10, m = 10;           // WYMIARY PLANSZY
+    int sheepsNumber = 6;       // LICZBA OWIEC
+    int n = 30, m = 30;           // WYMIARY PLANSZY
+    Border border;
 
-    JPanel[][] panelArray = new JPanel[n][m];
+    JButton[][] panelArray = new JButton[n][m];
 
 
     private MyFrame frame;
@@ -44,11 +48,22 @@ public class MyBoard extends JPanel {
         for (int i = 0; i < n; i++) {
 
             for (int j= 0; j < m; j++) {
-                panelArray[i][j] = new JPanel();
-                if ((i + j) % 2 == 0) { panelArray[i][j].setBackground(WHITE); }
-                else { panelArray[i][j].setBackground(GRAY); }
+                panelArray[i][j] = new JButton();
+                panelArray[i][j].setBackground(WHITE);
+
             }
         }
+
+        /*for (int i = 0; i < n; i++) {
+
+            for (int j = 0; j < m; j++) {
+                panelArray[i][j] = new JButton();
+                panelArray[i][j].setBackground(WHITE);
+                panelArray[i][j].setBorder(border);
+
+            }
+
+        }*/
     }
 
     void clearBackground() {
@@ -56,8 +71,7 @@ public class MyBoard extends JPanel {
         for (int i = 0; i < n; i++) {
 
             for (int j= 0; j < m; j++) {
-                if ((i + j) % 2 == 0) { panelArray[i][j].setBackground(WHITE); }
-                else { panelArray[i][j].setBackground(GRAY); }
+                panelArray[i][j].setBackground(WHITE);
             }
         }
     }

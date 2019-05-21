@@ -17,7 +17,7 @@ import static java.awt.Color.*;
 public class MyBoard extends JPanel {
     int sheepsNumber = 6;       // LICZBA OWIEC
     int n = 30, m = 30;           // WYMIARY PLANSZY
-    Border border;
+
 
     JButton[][] panelArray = new JButton[n][m];
 
@@ -98,8 +98,8 @@ public class MyBoard extends JPanel {
     }
 
     void drawSheeps() {
-        for (int i = 0; i < sheepsNumber; i++) {
-            panelArray[frame.position.sheepsPosition[i].x][frame.position.sheepsPosition[i].y].setBackground(PINK);
+        for (int i = 0; i < frame.position.sheepsPosition.size(); i++) {
+            panelArray[frame.position.sheepsPosition.get(i).x][frame.position.sheepsPosition.get(i).y].setBackground(PINK);
         }
     }
 

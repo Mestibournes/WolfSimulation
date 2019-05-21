@@ -24,9 +24,9 @@ public class Wolf implements Runnable {
                     nearbySheeps = new ArrayList<>();
                     it = 0;
                     do {
-                            for(int i = 0; i < frame.board.sheepsNumber; i++) {
-                            //if ((frame.position.wolfPosition.x - it == frame.position.sheepsPosition[i].x) || (frame.position.wolfPosition.x + it == frame.position.sheepsPosition[i].x) || (frame.position.wolfPosition.y - it == frame.position.sheepsPosition[i].y) || (frame.position.wolfPosition.y + it == frame.position.sheepsPosition[i].y)) {
-                            if ( (Math.abs(frame.position.wolfPosition.x - frame.position.sheepsPosition[i].x) <= it) && (Math.abs(frame.position.wolfPosition.y - frame.position.sheepsPosition[i].y) <= it )) {
+                            for(int i = 0; i < frame.position.sheepsPosition.size(); i++) {
+                            //if ((frame.position.wolfPosition.x - it == frame.position.sheepsPosition.get(i).x) || (frame.position.wolfPosition.x + it == frame.position.sheepsPosition.get(i).x) || (frame.position.wolfPosition.y - it == frame.position.sheepsPosition.get(i).y) || (frame.position.wolfPosition.y + it == frame.position.sheepsPosition.get(i).y)) {
+                            if ( (Math.abs(frame.position.wolfPosition.x - frame.position.sheepsPosition.get(i).x) <= it) && (Math.abs(frame.position.wolfPosition.y - frame.position.sheepsPosition.get(i).y) <= it )) {
                                   nearbySheeps.add(i);
                             }
 
@@ -42,9 +42,11 @@ public class Wolf implements Runnable {
                     }
 
                     chase();
-                    if( (frame.position.wolfPosition.x == frame.position.sheepsPosition[chasedIndex].x) && (frame.position.wolfPosition.y == frame.position.sheepsPosition[chasedIndex].y) ) {
-                        //frame.position.sheepsPosition[chasedIndex].x = 0;
-                        //frame.position.sheepsPosition[chasedIndex].x = 0;
+                    if( (frame.position.wolfPosition.x == frame.position.sheepsPosition.get(chasedIndex).x) && (frame.position.wolfPosition.y == frame.position.sheepsPosition.get(chasedIndex).y) ) {
+                        //frame.position.sheepsPosition.get(chasedIndex).x = 0;
+                        //frame.position.sheepsPosition.get(chasedIndex).x = 0;
+                        frame.position.sheepsPosition.remove(chasedIndex);
+
                     }
                     frame.board.clearBackground();
                     frame.board.refreshBoard();
@@ -77,11 +79,11 @@ public class Wolf implements Runnable {
 
     void chase() {
 
-            if (frame.position.wolfPosition.y > frame.position.sheepsPosition[chasedIndex].y) { frame.position.wolfPosition.y--; }
-            else if (frame.position.wolfPosition.y < frame.position.sheepsPosition[chasedIndex].y){ frame.position.wolfPosition.y++; }
+            if (frame.position.wolfPosition.y > frame.position.sheepsPosition.get(chasedIndex).y) { frame.position.wolfPosition.y--; }
+            else if (frame.position.wolfPosition.y < frame.position.sheepsPosition.get(chasedIndex).y){ frame.position.wolfPosition.y++; }
 
-            if (frame.position.wolfPosition.x > frame.position.sheepsPosition[chasedIndex].x) { frame.position.wolfPosition.x--; }
-            else if (frame.position.wolfPosition.x < frame.position.sheepsPosition[chasedIndex].x) { frame.position.wolfPosition.x++; }
+            if (frame.position.wolfPosition.x > frame.position.sheepsPosition.get(chasedIndex).x) { frame.position.wolfPosition.x--; }
+            else if (frame.position.wolfPosition.x < frame.position.sheepsPosition.get(chasedIndex).x) { frame.position.wolfPosition.x++; }
 
 
 

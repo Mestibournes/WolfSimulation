@@ -1,11 +1,13 @@
 package WolfSim;
 
+import java.util.ArrayList;
+
 import static java.awt.Color.PINK;
 
 public class Position {
     int x, y;
     MyFrame frame;
-    Position[] sheepsPosition;
+    ArrayList<Position>  sheepsPosition;
     Position wolfPosition;
 
     public Position(MyFrame frame, boolean original) {
@@ -13,7 +15,7 @@ public class Position {
 
         if (original == true) {
             wolfPosition = new Position(frame, false);
-            sheepsPosition = new Position[frame.board.sheepsNumber];
+            sheepsPosition =  new ArrayList<>();
         }
     }
 
@@ -27,7 +29,7 @@ public class Position {
         boolean validPosition;
 
         for (int i = 0; i < frame.board.sheepsNumber; i++) {
-            sheepsPosition[i] = new Position(frame, false);
+            sheepsPosition.add(new Position(frame, false));
             do {
                 validPosition = true;
                 x_ = (int)(Math.random() * frame.board.n);
@@ -40,24 +42,24 @@ public class Position {
 
                 for (int j = 0; j < i; j++) {
 
-                    if ( (sheepsPosition[j].x ==  x_) && (sheepsPosition[j].y == y_) ) {
+                    if ( (sheepsPosition.get(j).x ==  x_) && (sheepsPosition.get(j).y == y_) ) {
                         //System.out.println ("OWCA ZRESPILA SIE NA OWCY");
                         validPosition = false; }
                 }
 
             } while (validPosition == false);
 
-            sheepsPosition[i].set(x_, y_);
+            sheepsPosition.get(i).set(x_, y_);
 
         }
 
-        for (int i = 0; i < frame.board.sheepsNumber; i++) {
-            if ((sheepsPosition[i].x == wolfPosition.x) && (sheepsPosition[i].y == wolfPosition.y))
+        for (int i = 0; i < frame.position.sheepsPosition.size(); i++) {
+            if ((sheepsPosition.get(i).x == wolfPosition.x) && (sheepsPosition.get(i).y == wolfPosition.y))
             {
                 System.out.println("OWCA ZRESPILA SIE NA WILKU");
             }
             for (int j = 0; j < i; j++) {
-                if ((sheepsPosition[j].x == sheepsPosition[i].x) && (sheepsPosition[j].y == sheepsPosition[i].y))
+                if ((sheepsPosition.get(j).x == sheepsPosition.get(i).x) && (sheepsPosition.get(j).y == sheepsPosition.get(i).y))
                 {
                     System.out.println("OWCA ZRESPILA SIE NA WILKU");
                 }

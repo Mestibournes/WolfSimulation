@@ -2,14 +2,18 @@ package WolfSim;
 
 import java.util.ArrayList;
 
+import static java.awt.Color.*;
+
 public class Wolf implements Runnable {
     ArrayList<Integer> nearbySheeps = new ArrayList<>();
     int chasedIndex;
     int it;
+    Position previousPosition;
     private MyFrame frame;
 
     public Wolf(MyFrame frame) {
         this.frame = frame;
+        previousPosition = new Position(frame, false);
 
     }
 
@@ -21,8 +25,10 @@ public class Wolf implements Runnable {
                 Thread.sleep(1000);
 
                 do {
+                    Thread.sleep(200);
                     nearbySheeps = new ArrayList<>();
                     it = 0;
+                    previousPosition.set(frame.position.wolfPosition.x, frame.position.wolfPosition.y);
                     do {
                             for(int i = 0; i < frame.position.sheepsPosition.size(); i++) {
                             //if ((frame.position.wolfPosition.x - it == frame.position.sheepsPosition.get(i).x) || (frame.position.wolfPosition.x + it == frame.position.sheepsPosition.get(i).x) || (frame.position.wolfPosition.y - it == frame.position.sheepsPosition.get(i).y) || (frame.position.wolfPosition.y + it == frame.position.sheepsPosition.get(i).y)) {
@@ -48,9 +54,14 @@ public class Wolf implements Runnable {
                         frame.position.sheepsPosition.remove(chasedIndex);
 
                     }
-                    frame.board.clearBackground();
-                    frame.board.refreshBoard();
-                    Thread.sleep(200);
+                    //frame.board.clearBackground();
+                    //frame.board.refreshBoard();
+                    frame.board.panelArray[this.previousPosition.x][this.previousPosition.y].setBackground(WHITE);
+                    frame.board.panelArray[frame.position.wolfPosition.x][frame.position.wolfPosition.y].setBackground(RED);
+
+
+                    frame.position.notifyAll();
+                    frame.position.wait();
 
                 } while (true);
 

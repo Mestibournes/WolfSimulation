@@ -53,7 +53,7 @@ public class Position {
 
         }
 
-        for (int i = 0; i < frame.position.sheepsPosition.size(); i++) {
+        /*for (int i = 0; i < frame.position.sheepsPosition.size(); i++) {
             if ((sheepsPosition.get(i).x == wolfPosition.x) && (sheepsPosition.get(i).y == wolfPosition.y))
             {
                 System.out.println("OWCA ZRESPILA SIE NA WILKU");
@@ -65,7 +65,7 @@ public class Position {
                 }
             }
             //panelArray[sheepsPosition[i].getX()][sheepsPosition[i].getY()].setBackground(PINK);
-        }
+        } */
 
     }
 

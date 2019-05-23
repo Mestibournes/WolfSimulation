@@ -15,8 +15,8 @@ import static java.awt.Color.*;
  */
 
 public class MyBoard extends JPanel {
-    int sheepsNumber = 6;       // LICZBA OWIEC
-    int n = 30, m = 30;           // WYMIARY PLANSZY
+    int sheepsNumber = 3;       // LICZBA OWIEC
+    int n = 25, m = 25;           // WYMIARY PLANSZY
 
 
     JButton[][] panelArray = new JButton[n][m];
@@ -82,7 +82,6 @@ public class MyBoard extends JPanel {
 
     /** Dodawanie wszystkich pol do panelu*/
     void refreshBoard() {
-        System.out.println("ODSWIEZONO");
         drawWolf();
         drawSheeps();
 

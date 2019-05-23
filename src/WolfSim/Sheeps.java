@@ -89,54 +89,61 @@ public class Sheeps implements Runnable {
             deltaX = 0;
             deltaY = 0;
 
-            // WARUNKI GDY OWCA JEST W JEDNYM Z CZTERECH ROGOW
+            /** WARUNKI GDY OWCA JEST W JEDNYM Z CZTERECH ROGOW */
             if( (frame.position.sheepsPosition.get(i).y == 0) && (frame.position.sheepsPosition.get(i).x == 0) )
             {
                 System.out.println("OWCA JEST W LEWYM GORNYM ROGU");
-                randomMove();
+                randomMove(true, false);
                 frame.position.sheepsPosition.get(i).x += deltaX;
                 frame.position.sheepsPosition.get(i).y += deltaY;
             }
             else if ( (frame.position.sheepsPosition.get(i).y == 0) && (frame.position.sheepsPosition.get(i).x == frame.board.n - 1) ) {
                 System.out.println("OWCA JEST W LEWYM DOLNYM ROGU");
-                randomMove();
+                randomMove(true, true);
                 frame.position.sheepsPosition.get(i).x -= deltaX;
                 frame.position.sheepsPosition.get(i).y += deltaY;
             }
             else if ( (frame.position.sheepsPosition.get(i).y == frame.board.m - 1) && (frame.position.sheepsPosition.get(i).x == 0) ) {
                 System.out.println("OWCA JEST W PRAWYM GORNYM ROGU");
-                randomMove();
+                randomMove(true, false);
                 frame.position.sheepsPosition.get(i).x += deltaX;
                 frame.position.sheepsPosition.get(i).y -= deltaY;
             }
             else if ( (frame.position.sheepsPosition.get(i).y == frame.board.m - 1) && (frame.position.sheepsPosition.get(i).x == frame.board.n - 1) ) {
                 System.out.println("OWCA JEST W PRAWYM DOLNYM ROGU");
-                randomMove();
+                randomMove(true, true);
                 frame.position.sheepsPosition.get(i).x -= deltaX;
                 frame.position.sheepsPosition.get(i).y -= deltaY;
             }
+
+            /** /WARUNKI GDY OWCA JEST PRZY SCIANIE */
             else if ((frame.position.sheepsPosition.get(i).y == 0)) {
-                // GORNA KRAWEDZ
-                randomMove();
+                // LEWA KRAWEDZ
+                randomMove(false, true);
                 frame.position.sheepsPosition.get(i).x += deltaX;
                 frame.position.sheepsPosition.get(i).y += deltaY;
 
             }
-            else if() {
-                randomMove();
+            else if(frame.position.sheepsPosition.get(i).y == frame.board.m - 1) {
+                // PRAWA KRAWEDZ
+                randomMove(false, true);
+                frame.position.sheepsPosition.get(i).x += deltaX;
+                frame.position.sheepsPosition.get(i).y -= deltaY;
+            }
+            else if(frame.position.sheepsPosition.get(i).x == 0) {
+                // GORNA KRAWEZ
+                randomMove(false, false);
                 frame.position.sheepsPosition.get(i).x += deltaX;
                 frame.position.sheepsPosition.get(i).y += deltaY;
             }
-            else if() {
-                randomMove();
-                frame.position.sheepsPosition.get(i).x += deltaX;
+            else if(frame.position.sheepsPosition.get(i).x == frame.board.n - 1) {
+                // DOLNA KRAWEDZ
+                randomMove(false, false);
+                frame.position.sheepsPosition.get(i).x -= deltaX;
                 frame.position.sheepsPosition.get(i).y += deltaY;
             }
-            else if() {
-                randomMove();
-                frame.position.sheepsPosition.get(i).x += deltaX;
-                frame.position.sheepsPosition.get(i).y += deltaY;
-            }
+
+
             else {
 
                 if ((frame.position.wolfPosition.y > frame.position.sheepsPosition.get(i).y) && (frame.position.sheepsPosition.get(i).y != 0)) {
@@ -179,11 +186,28 @@ public class Sheeps implements Runnable {
 
     }
 
-    void randomMove() {
-        do {
-            deltaX = Math.abs((int)(Math.random() * 2));
-            deltaY = Math.abs((int)(Math.random() * 2));
-        } while (deltaX == 0 && deltaY ==0);
+    void randomMove(boolean corner, boolean canXBeNegative) {
+        if (corner == true) {
+            do {
+                deltaX = Math.abs((int) (Math.random() * 2));
+                deltaY = Math.abs((int) (Math.random() * 2));
+            } while (deltaX == 0 && deltaY == 0);
+        }
+        else if (canXBeNegative == true)
+        {
+            do {
+                deltaX = Math.abs((int) (Math.random() * 3)) - 1;
+                deltaY = Math.abs((int) (Math.random() * 2));
+            } while (deltaX == 0 && deltaY == 0);
+        }
+        else if (canXBeNegative == false)
+        {
+            do {
+                deltaX = Math.abs((int) (Math.random() * 2));
+                deltaY = Math.abs((int) (Math.random() * 3)) - 1;
+            } while (deltaX == 0 && deltaY == 0);
+        }
+
     }
 
 

@@ -6,7 +6,7 @@ import static java.awt.Color.PINK;
 import static java.awt.Color.WHITE;
 
 public class Sheeps implements Runnable {
-    ArrayList<Position> illegalPositions = new ArrayList<>();
+
     boolean doubledPosition = false;
     ArrayList<Position> previousPosition = new ArrayList<>();
     private MyFrame frame;
@@ -21,7 +21,7 @@ public class Sheeps implements Runnable {
 
             try {
                 for (; ; ) {
-                    setIllegalPositions();
+
 
                     for (int i = 0; i < frame.position.sheepsPosition.size(); i++) {
                         previousPosition.add(new Position(frame, false));
@@ -30,9 +30,7 @@ public class Sheeps implements Runnable {
 
 
                     runAway();
-
-
-                    Thread.sleep(500);
+                    Thread.sleep((long) (((Math.random() * 2) + 0.5) * frame.board.k));
 
                     //frame.board.clearBackground();
                     refreshSheeps();
@@ -60,25 +58,8 @@ public class Sheeps implements Runnable {
         }
     }
 
-    void setIllegalPositions() {
 
-        illegalPositions.add(new Position(frame, false));
-        illegalPositions.get(0).set(frame.position.wolfPosition.x, frame.position.wolfPosition.y);
 
-        for (int i = 1; i < frame.position.sheepsPosition.size(); i++) {
-            illegalPositions.add(new Position(frame, false));
-            illegalPositions.get(i).set(frame.position.sheepsPosition.get(i).x, frame.position.sheepsPosition.get(i).y);
-        }
-    }
-
-    boolean isXTaken(Position sheep, int x_, int y_) {
-        for (int i = 0; i < illegalPositions.size(); i++) {
-            if (((sheep.x + x_) == illegalPositions.get(i).x) && ((sheep.y + y_) == illegalPositions.get(i).y)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
 
     void runAway() {
@@ -92,25 +73,25 @@ public class Sheeps implements Runnable {
             /** WARUNKI GDY OWCA JEST W JEDNYM Z CZTERECH ROGOW */
             if( (frame.position.sheepsPosition.get(i).y == 0) && (frame.position.sheepsPosition.get(i).x == 0) )
             {
-                System.out.println("OWCA JEST W LEWYM GORNYM ROGU");
+                //System.out.println("OWCA JEST W LEWYM GORNYM ROGU");
                 randomMove(true, false);
                 frame.position.sheepsPosition.get(i).x += deltaX;
                 frame.position.sheepsPosition.get(i).y += deltaY;
             }
             else if ( (frame.position.sheepsPosition.get(i).y == 0) && (frame.position.sheepsPosition.get(i).x == frame.board.n - 1) ) {
-                System.out.println("OWCA JEST W LEWYM DOLNYM ROGU");
+                //System.out.println("OWCA JEST W LEWYM DOLNYM ROGU");
                 randomMove(true, true);
                 frame.position.sheepsPosition.get(i).x -= deltaX;
                 frame.position.sheepsPosition.get(i).y += deltaY;
             }
             else if ( (frame.position.sheepsPosition.get(i).y == frame.board.m - 1) && (frame.position.sheepsPosition.get(i).x == 0) ) {
-                System.out.println("OWCA JEST W PRAWYM GORNYM ROGU");
+                //System.out.println("OWCA JEST W PRAWYM GORNYM ROGU");
                 randomMove(true, false);
                 frame.position.sheepsPosition.get(i).x += deltaX;
                 frame.position.sheepsPosition.get(i).y -= deltaY;
             }
             else if ( (frame.position.sheepsPosition.get(i).y == frame.board.m - 1) && (frame.position.sheepsPosition.get(i).x == frame.board.n - 1) ) {
-                System.out.println("OWCA JEST W PRAWYM DOLNYM ROGU");
+                //System.out.println("OWCA JEST W PRAWYM DOLNYM ROGU");
                 randomMove(true, true);
                 frame.position.sheepsPosition.get(i).x -= deltaX;
                 frame.position.sheepsPosition.get(i).y -= deltaY;
@@ -171,7 +152,7 @@ public class Sheeps implements Runnable {
 
 
                 for (int j = 0; j < frame.position.sheepsPosition.size(); j++) {
-                if ( (frame.position.sheepsPosition.get(i).x == frame.position.sheepsPosition.get(j).x) && (frame.position.sheepsPosition.get(i).y == frame.position.sheepsPosition.get(j).y) && (i!=j) ) {
+                if ( ((frame.position.sheepsPosition.get(i).x == frame.position.sheepsPosition.get(j).x) && (frame.position.sheepsPosition.get(i).y == frame.position.sheepsPosition.get(j).y) && (i!=j)) ||  ((frame.position.sheepsPosition.get(i).x == frame.position.wolfPosition.x) && (frame.position.sheepsPosition.get(i).y == frame.position.wolfPosition.y))) {
                     isTaken = true;
                 }
             }

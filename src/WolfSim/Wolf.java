@@ -10,6 +10,7 @@ public class Wolf implements Runnable {
     int it;
     Position previousPosition;
     private MyFrame frame;
+    ArrayList<Integer> distance = new ArrayList<>();
 
     public Wolf(MyFrame frame) {
         this.frame = frame;
@@ -25,11 +26,11 @@ public class Wolf implements Runnable {
                 Thread.sleep(1000);
 
                 do {
-                    Thread.sleep(200);
+                    Thread.sleep(50);
                     nearbySheeps = new ArrayList<>();
                     it = 0;
                     previousPosition.set(frame.position.wolfPosition.x, frame.position.wolfPosition.y);
-                    do {
+                    /*do {
                             for(int i = 0; i < frame.position.sheepsPosition.size(); i++) {
                             //if ((frame.position.wolfPosition.x - it == frame.position.sheepsPosition.get(i).x) || (frame.position.wolfPosition.x + it == frame.position.sheepsPosition.get(i).x) || (frame.position.wolfPosition.y - it == frame.position.sheepsPosition.get(i).y) || (frame.position.wolfPosition.y + it == frame.position.sheepsPosition.get(i).y)) {
                             if ( (Math.abs(frame.position.wolfPosition.x - frame.position.sheepsPosition.get(i).x) <= it) && (Math.abs(frame.position.wolfPosition.y - frame.position.sheepsPosition.get(i).y) <= it )) {
@@ -41,21 +42,20 @@ public class Wolf implements Runnable {
                     } while (nearbySheeps.size() == 0);
 
                     if (nearbySheeps.size() == 1) {
-                        chasedIndex = nearbySheeps.get(0);
+                        //chasedIndex = nearbySheeps.get(0);
                     } else {
                         System.out.println("ZA DUZO OWCOW");
                         chasedIndex = (int) (Math.random() * nearbySheeps.size());
-                    }
+                    }*/
 
+                    searchForSheep();
                     chase();
-                    if( (frame.position.wolfPosition.x == frame.position.sheepsPosition.get(chasedIndex).x) && (frame.position.wolfPosition.y == frame.position.sheepsPosition.get(chasedIndex).y) ) {
-                        //frame.position.sheepsPosition.get(chasedIndex).x = 0;
-                        //frame.position.sheepsPosition.get(chasedIndex).x = 0;
-                        frame.position.sheepsPosition.remove(chasedIndex);
-
+                    for (int i = 0; i < frame.position.sheepsPosition.size(); i++) {
+                        if ((frame.position.wolfPosition.x == frame.position.sheepsPosition.get(i).x) && (frame.position.wolfPosition.y == frame.position.sheepsPosition.get(i).y)) {
+                            frame.position.sheepsPosition.remove(i);
+                        }
                     }
-                    //frame.board.clearBackground();
-                    //frame.board.refreshBoard();
+
                     frame.board.panelArray[this.previousPosition.x][this.previousPosition.y].setBackground(WHITE);
                     frame.board.panelArray[frame.position.wolfPosition.x][frame.position.wolfPosition.y].setBackground(RED);
 
@@ -65,28 +65,47 @@ public class Wolf implements Runnable {
 
                 } while (true);
 
-                /*
-                while (frame.position.wolfPosition.x < frame.board.n - 1) {
-                    frame.position.wolfPosition.x++;
-                    frame.board.clearBackground();
-                    frame.board.refreshBoard();
-                    Thread.sleep(500);
-                }
-
-                frame.position.wait();
-                while (frame.position.wolfPosition.y < frame.board.m - 1) {
-                    frame.position.wolfPosition.y++;
-                    frame.board.clearBackground();
-                    frame.board.refreshBoard();
-                    Thread.sleep(500);
-                }*/
-
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
+
+    void searchForSheep() {
+        distance = new ArrayList<>();
+        for (int i = 0; i < frame.position.sheepsPosition.size(); i++) {
+            distance.add(Math.max(Math.abs(frame.position.wolfPosition.x - frame.position.sheepsPosition.get(i).x), Math.abs(frame.position.wolfPosition.y - frame.position.sheepsPosition.get(i).y)));
+        }
+        nearbySheeps = new ArrayList<>();
+        int shortestDistance = distance.get(0);
+        nearbySheeps.add(0);
+
+        for (int i = 1; i < frame.position.sheepsPosition.size(); i++) {
+            if (shortestDistance > distance.get(i)) {
+                shortestDistance = distance.get(i);
+                nearbySheeps = new ArrayList<>();
+                nearbySheeps.add(i);
+            }
+            else if(shortestDistance == distance.get(i)) {
+                nearbySheeps.add(i);
+            }
+        }
+        if (nearbySheeps.size() == 0) {
+            System.out.println("O KURWA MAC TAK NIE MOZE BYC");
+        }
+
+        if (nearbySheeps.size() == 1) {
+           chasedIndex = nearbySheeps.get(0);
+        }
+        else {
+            int randomSheep =  (int) (Math.random() * nearbySheeps.size());
+            chasedIndex = nearbySheeps.get(randomSheep);
+            System.out.println("DUZO OWCOW");
+        }
+    }
+
+
 
     void chase() {
 

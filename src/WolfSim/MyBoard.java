@@ -15,8 +15,9 @@ import static java.awt.Color.*;
  */
 
 public class MyBoard extends JPanel {
-    int sheepsNumber = 30;       // LICZBA OWIEC
-    int n = 30, m = 30;           // WYMIARY PLANSZY
+    int sheepsNumber = 60;       // LICZBA OWIEC
+    int n = 15, m = 15;           // WYMIARY PLANSZY
+    int k = 200;                          // CZAS TURY W MILISEKUNDACH
 
 
     JButton[][] panelArray = new JButton[n][m];
@@ -41,6 +42,12 @@ public class MyBoard extends JPanel {
 
 
 
+    }
+
+    public void setMyBounds(int n, int m){
+
+        this.n = n;
+        this.m = m;
     }
 
 
